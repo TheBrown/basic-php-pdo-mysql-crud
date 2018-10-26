@@ -1,7 +1,25 @@
+<?php
+  $server = "localhost";
+  $user = "root";
+  $pass = "root";
+
+  try {
+    $conn = new PDO("mysql:host=$server; dbname=db_crud", $user, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // echo "Connected";
+
+    $sql = $conn->prepare("SELECT * FROM tb_product;");
+    $sql->execute();
+
+  } catch (PDOException $e) {
+    echo "Failed: ".$e->getMessage();
+  }
+
+?>
+
 <!DOCTYPE html>
 <html>
 
-<head>
   <style>
     .card {
       background-color: #ffffff;
@@ -31,7 +49,7 @@ tr:hover {background-color:#f5f5f5;}
     th,
     td,
     h2,
-    p, 
+    p,
     form {
       padding: 15px;
     }
@@ -49,18 +67,17 @@ tr:hover {background-color:#f5f5f5;}
 }
 
   </style>
-</head>
 
 <body style="background-color: #c1c1c1">
   <div class="card">
 
     <h2 style="text-align:center">Shop management</h2>
     <form action="">
-      <label for="fname">Book Name</label>
+      <label for="fname">Name</label>
       <input type="text" name="kuy" id="kuy">
-      <label for="sdf">Book Price</label>
+      <label for="sdf">Price</label>
       <input type="text" name="kuy" id="kuy">
-      <label for="asdf">Book Page</label>
+      <label for="asdf">Detail</label>
       <input type="text" name="kuy" id="kuy">
       <input type="button" value="Submit">
     </form>
@@ -75,42 +92,19 @@ tr:hover {background-color:#f5f5f5;}
         <th>Savings</th>
         <th>Action</th>
       </tr>
+      <?php
+      while($res = $sql->fetch(PDO::FETCH_ASSOC))
+      {
+      ?>
       <tr>
-        <td>Peter</td>
-        <td>Griffin</td>
-        <td>$100</td>
-        <td>$100</td>
+        <td><?echo $res['id'];?></td>
+        <td><?echo $res['product_name'];?></td>
+        <td><?echo $res['product_price'];?></td>
+        <td><?echo $res['product_detail'];?></td>
       </tr>
-      <tr>
-        <td>Lois</td>
-        <td>Griffin</td>
-        <td>$150</td>
-        <td>$100</td>
-      </tr>
-      <tr>
-        <td>Joe</td>
-        <td>Swanson</td>
-        <td>$300</td>
-        <td>$100</td>
-      </tr>
-      <tr>
-        <td>Cleveland</td>
-        <td>Brown</td>
-        <td>$250</td>
-        <td>$100</td>
-      </tr>
-      <tr>
-        <td>Cleveland</td>
-        <td>Brown</td>
-        <td>$250</td>
-        <td>$100</td>
-      </tr>
-      <tr>
-        <td>Cleveland</td>
-        <td>Brown</td>
-        <td>$250</td>
-        <td>$100</td>
-      </tr>
+      <?php
+      }
+      ?>
     </table>
   </div>
 
