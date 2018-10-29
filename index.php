@@ -1,16 +1,24 @@
 <?php
 require './db.php';
 
-$idProduct = $_POST['idproduct'];
+$idProduct = $_GET['id'];
 
 $deleteQuery = "DELETE FROM tb_product WHERE id=:id";
 $deleteResult = $conn->prepare($deleteQuery);
 $deleteExec = $deleteResult->execute(array(":id" => $idProduct));
 
-if($deleteExec) {
-  echo "Deleted!";
+
+$pname = $_POST['name'];
+$price = $_POST['price'];
+$detail = $_POST['detail'];
+
+$insertQuery = "INSERT INTO tb_product(product_name, product_price, product_detail) VALUES (:pname, :price, :detail);";
+$insertResult = $conn->prepare($insertQuery);
+$insertExec = $insertResult->execute(array(":pname" => $pname, ":price" => $price, ":detail" => $detail));
+
+if ($insertExec) {
+    echo "Data Inserted!";
 } else {
-  echo "Delete Failed!";
 }
 
 $sql = $conn->prepare("SELECT * FROM tb_product;");
@@ -80,11 +88,15 @@ tr:hover {background-color:#f5f5f5;}
 <body style="background-color: #c1c1c1">
   <div class="card">
 
-    <h2 style="text-align:center">DELETE management</h2>
-    <form action="./delete.php" method="POST">
-      <label for="fname">ID Product</label>
-      <input type="number" name="idproduct" id="idproduct" placeholder="Number Only" required>
-      <input type="submit" value="Delete Data" name="delete">
+    <h2 style="text-align:center">Shop management</h2>
+    <form action="./table.php" method="POST">
+      <label for="fname">Name</label>
+      <input type="text" name="name" id="name" placeholder="The Name of Product" required>
+      <label for="sdf">Price</label>
+      <input type="number" name="price" id="price" placeholder="Number only" required>
+      <label for="asdf">Detail</label>
+      <input type="text" name="detail" id="detail" required placeholder="Detail of the product">
+      <input type="submit" value="Insert Data" name="insert">
     </form>
 
 
@@ -102,16 +114,16 @@ tr:hover {background-color:#f5f5f5;}
         <th>Edit</th>
       </tr>
       <?php
+      $index = 1;
         while ($res = $sql->fetch(PDO::FETCH_ASSOC)) {
       ?>
       <tr>
-        <td><?echo $res['id']; ?></td>
+        <td><?echo $index++ ?></td>
        
         <td><?= $res['product_name']; ?></td>
         <td><?= $res['product_price']; ?></td>
         <td><?echo $res['product_detail']; ?></td>
-        <!-- <td><input type="submit" value="Delete" name="delete" onclick="return confirm('Are you sure? to delete id: '+ <? echo $res['id']?>)"></td> -->
-        <td><a href="./table.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? to delete id:' + <?php echo $res['id']?> )">delete</a></td>
+        <td><a href="./table.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? ')">delete</a></td>
         <td><input type="button" value="Edit"></td>
       </tr>
       <?php
@@ -122,7 +134,9 @@ tr:hover {background-color:#f5f5f5;}
   </div>
   <br>
   <div style="text-align: center">
-<a href="./table.php">Home?</a>
+<a href="./search.php">Search?</a>
+<a href="./update.php">Update?</a>
+
 </div>
 </body>
 

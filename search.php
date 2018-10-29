@@ -7,12 +7,6 @@ $deleteQuery = "DELETE FROM tb_product WHERE id=:id";
 $deleteResult = $conn->prepare($deleteQuery);
 $deleteExec = $deleteResult->execute(array(":id" => $idProduct));
 
-// if($deleteExec) {
-//   echo "Deleted!";
-// } else {
-//   echo "Delete Failed!";
-// }
-
 $sql = $conn->prepare("SELECT * FROM tb_product;");
 $sql->execute();
 
@@ -122,7 +116,7 @@ tr:hover {background-color:#f5f5f5;}
   </div>
   <br>
   <div style="text-align: center">
-<a href="./table.php">Home?</a>
+<a href="./index.php">Home?</a>
 </div>
 </body>
 

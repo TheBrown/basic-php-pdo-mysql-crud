@@ -128,7 +128,8 @@ tr:hover {background-color:#f5f5f5;}
   <br>
   <div style="text-align: center">
 <a href="./search.php">Search?</a>
-<a href="./delete.php">DELETE?</a>
+<a href="./index.php">Home?</a>
+
 </div>
 </body>
 
