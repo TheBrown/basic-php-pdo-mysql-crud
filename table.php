@@ -44,11 +44,14 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+td {
+  padding-left : 8px;
+  padding-right: 8px
+}
 
 tr:hover {background-color:#f5f5f5;}
 
     th,
-    td,
     h2,
     p,
     form {
@@ -76,7 +79,6 @@ tr:hover {background-color:#f5f5f5;}
   </style>
 
 <body style="background-color: #c1c1c1">
-<a href="./search.php">Search?</a>
   <div class="card">
 
     <h2 style="text-align:center">Shop management</h2>
@@ -118,7 +120,10 @@ while ($res = $sql->fetch(PDO::FETCH_ASSOC)) {
 ?>
     </table>
   </div>
-
+  <br>
+  <div style="text-align: center">
+<a href="./search.php">Search?</a>
+</div>
 </body>
 
 </html>
