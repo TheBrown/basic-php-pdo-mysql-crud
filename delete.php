@@ -7,11 +7,11 @@ $deleteQuery = "DELETE FROM tb_product WHERE id=:id";
 $deleteResult = $conn->prepare($deleteQuery);
 $deleteExec = $deleteResult->execute(array(":id" => $idProduct));
 
-// if($deleteExec) {
-//   echo "Deleted!";
-// } else {
-//   echo "Delete Failed!";
-// }
+if($deleteExec) {
+  echo "Deleted!";
+} else {
+  echo "Delete Failed!";
+}
 
 $sql = $conn->prepare("SELECT * FROM tb_product;");
 $sql->execute();
@@ -80,11 +80,11 @@ tr:hover {background-color:#f5f5f5;}
 <body style="background-color: #c1c1c1">
   <div class="card">
 
-    <h2 style="text-align:center">Search management</h2>
+    <h2 style="text-align:center">DELETE management</h2>
     <form action="./delete.php" method="POST">
       <label for="fname">ID Product</label>
-      <input type="test" name="idproduct" id="idproduct" placeholder="You can type anyword that you need to search" required>
-      <input type="submit" value="Search Data" name="delete">
+      <input type="number" name="idproduct" id="idproduct" placeholder="Number Only" required>
+      <input type="submit" value="Delete Data" name="delete">
     </form>
 
 

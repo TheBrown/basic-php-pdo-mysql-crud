@@ -94,7 +94,9 @@ tr:hover {background-color:#f5f5f5;}
 
 
   </div>
+  <br>
   <div class="card">
+  <form action="./table.php" method="post">
     <table>
       <tr style="background-color: bisque">
         <th>id</th>
@@ -105,24 +107,30 @@ tr:hover {background-color:#f5f5f5;}
         <th>Edit</th>
       </tr>
       <?php
-while ($res = $sql->fetch(PDO::FETCH_ASSOC)) {
-    ?>
+        while ($res = $sql->fetch(PDO::FETCH_ASSOC)) {
+      ?>
       <tr>
         <td><?echo $res['id']; ?></td>
-        <td><?echo $res['product_name']; ?></td>
-        <td><?echo $res['product_price']; ?></td>
+       
+        <td><?= $res['product_name']; ?></td>
+        <td><?= $res['product_price']; ?></td>
         <td><?echo $res['product_detail']; ?></td>
-        <td><input type="button" value="Delete"></td>
+        <!-- <td><input type="submit" value="Delete" name="delete" onclick="return confirm('Are you sure? to delete id: '+ <? echo $res['id']?>)"></td> -->
+        <td><a href="./table.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? to delete id:' + <?php echo $res['id']?> )">delete</a></td>
         <td><input type="button" value="Edit"></td>
       </tr>
       <?php
-}
-?>
+        }
+      ?>
     </table>
+    </form>
   </div>
   <br>
   <div style="text-align: center">
 <a href="./search.php">Search?</a>
+<a href="./delete.php">Delete?</a>
+<a href="./update.php">Update?</a>
+
 </div>
 </body>
 
