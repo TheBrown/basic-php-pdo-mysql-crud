@@ -4,18 +4,28 @@ $idProduct = $_GET['id'];
 $sql = $conn->prepare("SELECT * FROM tb_product WHERE id=:id;");
 $sql->execute(array(":id" => $idProduct));
 
-$pname = $_POST['name'];
-$price = $_POST['price'];
-$detail = $_POST['detail'];
 
-$updateQuery = "UPDATE product SET product_name = :pname, product_price = :pprice, product_detail = :pdetail WHERE id=:id";
-$updateResult = $conn->prepare($updateQuery);
-$updateExec = $updateResult->execute(array(":pname" => $pname, ":pprice"=>$price, ":pdetail"=>$detail, ":id"=> $idProduct));
+if(isset($_POST['update'])) {
 
-if($updateExec) {
-  echo "Product id:".$idProduct." is Updated!";
-} else {
-}
+$idP = $_POST['id'];
+  $pname = $_POST['name'];
+  $price = $_POST['price'];
+  $detail = $_POST['detail'];
+
+  $updateQuery = "UPDATE tb_product SET product_name=:pname, product_price=:pprice, product_detail=:pdetail WHERE id=:id";
+  $updateResult = $conn->prepare($updateQuery);
+  $updateExec = $updateResult->execute(array(":pname" => $pname, ":pprice"=>$price, ":pdetail"=>$detail, ":id"=> $idP));
+
+
+  if ($updateExec) {
+    // echo "Product id:".$idProduct." is Updated!";
+    header("Location: index.php");
+    echo "Product Updated!";
+
+  } else {
+    echo "Failed to update!";
+  }
+} 
 
 ?>
 
@@ -82,7 +92,7 @@ tr:hover {background-color:#f5f5f5;}
   <div class="card">
 
     <h2 style="text-align:center">Update management</h2>
-    <form action="./update.php?id=<?php echo $res['id']?>" method="POST">
+    <form action="./update.php" method="POST">
     <?php
         foreach ( $sql as $re1 => $res) {
       ?>
@@ -94,7 +104,7 @@ tr:hover {background-color:#f5f5f5;}
       <input type="number" name="price" id="price" placeholder="Number only" value="<?php echo $res['product_price'];?>" required>
       <label for="asdf">Detail</label>
       <input type="text" name="detail" id="detail" required placeholder="Detail of the product" value="<?php echo $res['product_detail'];?>">
-      <input type="submit" value="Update Data" name="insert">
+      <input type="submit" value="Update Data" name="update" onclick="return confirm('Are you sure to update productID: ' + <?php echo $res['id'];?>)">
 
       <?php
         }
