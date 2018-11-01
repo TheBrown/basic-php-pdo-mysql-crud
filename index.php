@@ -89,7 +89,7 @@ tr:hover {background-color:#f5f5f5;}
   <div class="card">
 
     <h2 style="text-align:center">Shop management</h2>
-    <form action="./table.php" method="POST">
+    <form action="./index.php" method="POST">
       <label for="fname">Name</label>
       <input type="text" name="name" id="name" placeholder="The Name of Product" required>
       <label for="sdf">Price</label>
@@ -103,7 +103,7 @@ tr:hover {background-color:#f5f5f5;}
   </div>
   <br>
   <div class="card">
-  <form action="./table.php" method="post">
+  <form action="./index.php" method="post">
     <table>
       <tr style="background-color: bisque">
         <th>id</th>
@@ -115,7 +115,8 @@ tr:hover {background-color:#f5f5f5;}
       </tr>
       <?php
       $index = 1;
-        while ($res = $sql->fetch(PDO::FETCH_ASSOC)) {
+        while ($res = $sql->fetch()) {
+          // foreach($sql as $re => $res){
       ?>
       <tr>
         <td><?echo $index++ ?></td>
@@ -123,8 +124,8 @@ tr:hover {background-color:#f5f5f5;}
         <td><?= $res['product_name']; ?></td>
         <td><?= $res['product_price']; ?></td>
         <td><?echo $res['product_detail']; ?></td>
-        <td><a href="./table.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? ')">delete</a></td>
-        <td><input type="button" value="Edit"></td>
+        <td><a href="./index.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? ')">delete</a></td>
+        <td><a href="./update.php?id=<?php echo $res['id']?>" >edit</a></td>
       </tr>
       <?php
         }
@@ -135,7 +136,6 @@ tr:hover {background-color:#f5f5f5;}
   <br>
   <div style="text-align: center">
 <a href="./search.php">Search?</a>
-<a href="./update.php">Update?</a>
 
 </div>
 </body>

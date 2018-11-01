@@ -1,21 +1,21 @@
 <?php
 require './db.php';
+$idProduct = $_GET['id'];
+$sql = $conn->prepare("SELECT * FROM tb_product WHERE id=:id;");
+$sql->execute(array(":id" => $idProduct));
 
 $pname = $_POST['name'];
 $price = $_POST['price'];
 $detail = $_POST['detail'];
 
-$insertQuery = "INSERT INTO tb_product(product_name, product_price, product_detail) VALUES (:pname, :price, :detail);";
-$insertResult = $conn->prepare($insertQuery);
-$insertExec = $insertResult->execute(array(":pname" => $pname, ":price" => $price, ":detail" => $detail));
+$updateQuery = "UPDATE product SET product_name = :pname, product_price = :pprice, product_detail = :pdetail WHERE id=:id";
+$updateResult = $conn->prepare($updateQuery);
+$updateExec = $updateResult->execute(array(":pname" => $pname, ":pprice"=>$price, ":pdetail"=>$detail, ":id"=> $idProduct));
 
-if ($insertExec) {
-    echo "Data Inserted!";
+if($updateExec) {
+  echo "Product id:".$idProduct." is Updated!";
 } else {
 }
-
-$sql = $conn->prepare("SELECT * FROM tb_product;");
-$sql->execute();
 
 ?>
 
@@ -82,48 +82,26 @@ tr:hover {background-color:#f5f5f5;}
   <div class="card">
 
     <h2 style="text-align:center">Update management</h2>
-    <form action="./table.php" method="POST">
-      <label for="fname">Name</label>
-      <input type="text" name="name" id="name" placeholder="The Name of Product" required>
-      <label for="sdf">Price</label>
-      <input type="number" name="price" id="price" placeholder="Number only" required>
-      <label for="asdf">Detail</label>
-      <input type="text" name="detail" id="detail" required placeholder="Detail of the product">
-      <input type="submit" value="Update Data" name="insert">
-    </form>
-
-
-  </div>
-  <br>
-  <div class="card">
-  <form action="./table.php" method="post">
-    <table>
-      <tr style="background-color: bisque">
-        <th>id</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Detail</th>
-        <th>Delete</th>
-        <th>Edit</th>
-      </tr>
-      <?php
-        while ($res = $sql->fetch(PDO::FETCH_ASSOC)) {
+    <form action="./update.php?id=<?php echo $res['id']?>" method="POST">
+    <?php
+        foreach ( $sql as $re1 => $res) {
       ?>
-      <tr>
-        <td><?echo $res['id']; ?></td>
-       
-        <td><?= $res['product_name']; ?></td>
-        <td><?= $res['product_price']; ?></td>
-        <td><?echo $res['product_detail']; ?></td>
-        <!-- <td><input type="submit" value="Delete" name="delete" onclick="return confirm('Are you sure? to delete id: '+ <? echo $res['id']?>)"></td> -->
-        <td><a href="./table.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? to delete id:' + <?php echo $res['id']?> )">delete</a></td>
-        <td><input type="button" value="Edit"></td>
-      </tr>
+      <label for="id">ID</label>
+      <input type="text" name="id" id="id" value="<?php echo $res['id'];?>" readonly>
+      <label for="fname">Name</label>
+      <input type="text" name="name" id="name" placeholder="The Name of Product"  value="<?php echo $res['product_name'];?>" required>
+      <label for="sdf">Price</label>
+      <input type="number" name="price" id="price" placeholder="Number only" value="<?php echo $res['product_price'];?>" required>
+      <label for="asdf">Detail</label>
+      <input type="text" name="detail" id="detail" required placeholder="Detail of the product" value="<?php echo $res['product_detail'];?>">
+      <input type="submit" value="Update Data" name="insert">
+
       <?php
         }
       ?>
-    </table>
     </form>
+
+
   </div>
   <br>
   <div style="text-align: center">
