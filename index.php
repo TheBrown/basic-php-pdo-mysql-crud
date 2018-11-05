@@ -35,7 +35,8 @@ $sql->execute();
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       transition: 0.3s;
       width: 40%;
-      margin: auto
+      margin: auto;
+      border-radius: 5px;
     }
 
     .card:hover {
@@ -99,7 +100,6 @@ tr:hover {background-color:#f5f5f5;}
       <input type="submit" value="Insert Data" name="insert">
     </form>
 
-
   </div>
   <br>
   <div class="card">
@@ -116,13 +116,12 @@ tr:hover {background-color:#f5f5f5;}
       <?php
       $index = 1;
         while ($res = $sql->fetch()) {
-          // foreach($sql as $re => $res){
       ?>
       <tr>
         <td><?echo $index++ ?></td>
        
-        <td><?= $res['product_name']; ?></td>
-        <td><?= $res['product_price']; ?></td>
+        <td><?php echo $res['product_name']; ?></td>
+        <td><?php echo $res['product_price']; ?></td>
         <td><?echo $res['product_detail']; ?></td>
         <td><a href="./index.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? ')">delete</a></td>
         <td><a href="./update.php?id=<?php echo $res['id']?>" >edit</a></td>
@@ -135,7 +134,7 @@ tr:hover {background-color:#f5f5f5;}
   </div>
   <br>
   <div style="text-align: center">
-<a href="./search.php">Search?</a>
+  <a href="./search.php">Search?</a>
 
 </div>
 </body>

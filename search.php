@@ -24,7 +24,9 @@ if (isset($_POST['search'])) {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       transition: 0.3s;
       width: 40%;
-      margin: auto
+      margin: auto;
+	padding: 15px;
+	border-radius: 5px;
     }
 
     .card:hover {
