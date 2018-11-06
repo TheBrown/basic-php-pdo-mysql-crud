@@ -28,7 +28,7 @@ $sql->execute();
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="./css/main.css"; >
+<link rel="stylesheet" type="text/css" href="./css/main.css" >
 </head>
 <body style="background-color: #c1c1c1">
   <div class="card">
