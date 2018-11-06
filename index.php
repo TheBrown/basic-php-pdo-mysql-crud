@@ -7,7 +7,6 @@ $deleteQuery = "DELETE FROM tb_product WHERE id=:id";
 $deleteResult = $conn->prepare($deleteQuery);
 $deleteExec = $deleteResult->execute(array(":id" => $idProduct));
 
-
 $pname = $_POST['name'];
 $price = $_POST['price'];
 $detail = $_POST['detail'];
@@ -28,64 +27,9 @@ $sql->execute();
 
 <!DOCTYPE html>
 <html>
-
-  <style>
-    .card {
-      background-color: #ffffff;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      transition: 0.3s;
-      width: 40%;
-      margin: auto;
-      border-radius: 5px;
-    }
-
-    .card:hover {
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    }
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 15px;
-}
-
-th, td {
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-td {
-  padding-left : 8px;
-  padding-right: 8px
-}
-
-tr:hover {background-color:#f5f5f5;}
-
-    th,
-    h2,
-    p,
-    form {
-      padding: 15px;
-    }
-    input {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      box-sizing: border-box;
-    }
-    input[type=button] {
-    background-color: steelblue;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    }
-    input[type=submit] {
-    background-color: darkseagreen;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    }
-
-  </style>
-
+<head>
+<link rel="stylesheet" type="text/css" href="./css/main.css"; >
+</head>
 <body style="background-color: #c1c1c1">
   <div class="card">
 
@@ -114,21 +58,21 @@ tr:hover {background-color:#f5f5f5;}
         <th>Edit</th>
       </tr>
       <?php
-      $index = 1;
-        while ($res = $sql->fetch()) {
-      ?>
+$index = 1;
+while ($res = $sql->fetch()) {
+    ?>
       <tr>
         <td><?echo $index++ ?></td>
-       
+
         <td><?php echo $res['product_name']; ?></td>
         <td><?php echo $res['product_price']; ?></td>
         <td><?echo $res['product_detail']; ?></td>
-        <td><a href="./index.php?id=<?php echo $res['id']?>" onclick="return confirm('Are you sure? ')">delete</a></td>
-        <td><a href="./update.php?id=<?php echo $res['id']?>" >edit</a></td>
+        <td><a href="./index.php?id=<?php echo $res['id'] ?>" onclick="return confirm('Are you sure? ')">delete</a></td>
+        <td><a href="./update.php?id=<?php echo $res['id'] ?>" >edit</a></td>
       </tr>
       <?php
-        }
-      ?>
+}
+?>
     </table>
     </form>
   </div>
